@@ -32,7 +32,7 @@ public class Candidate implements Serializable {
     @Column(name = "evaluate_point")
     private Float evaluatePoint;
     @JoinColumn(name = "cv_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Cv cvId;
     @JoinColumn(name = "request_id", referencedColumnName = "id")
     @ManyToOne

@@ -23,8 +23,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -69,7 +67,6 @@ public class Request implements Serializable {
     @Column(name = "year_of_experience")
     private String yearOfExperience;
     @Column(name = "cv_deadline")
-    @Temporal(TemporalType.DATE)
     private Date cvDeadline;
     @JoinTable(name = "request_skill", joinColumns = {
         @JoinColumn(name = "request_id", referencedColumnName = "id")}, inverseJoinColumns = {
