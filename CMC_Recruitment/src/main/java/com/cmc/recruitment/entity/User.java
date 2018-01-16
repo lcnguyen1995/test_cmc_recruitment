@@ -16,10 +16,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -34,30 +37,50 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+    
     @Column(name = "username")
     private String username;
+    
     @Column(name = "password")
     private String password;
+   
     @Column(name = "email")
     private String email;
+    
     @Column(name = "full_name")
     private String fullName;
+    
     @Column(name = "avatar_url")
     private String avatarUrl;
-    @Column(name = "isActive")
+   
+    @Column(name = "is_active")
     private Boolean isActive;
+   
     @ManyToMany(mappedBy = "userCollection")
+    @JsonIgnore
     private Set<Interview> interviewCollection;
-    @ManyToMany(mappedBy = "userCollection")
+    
+    @ManyToMany
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleCollection;
+   
+    @JsonIgnore
     @OneToMany(mappedBy = "assigneeId")
     private List<Request> requestCollection;
+   
+    @JsonIgnore
     @OneToMany(mappedBy = "createdBy")
     private List<Request> requestCollection1;
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "editedBy")
     private List<Request> requestCollection2;
+   
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private List<Comment> commentCollection;
+    
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne
     private Department departmentId;
@@ -190,7 +213,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "demo.User[ id=" + id + " ]";
+      return "User [id=" + id + ", username=" + username + "]";
     }
-    
 }

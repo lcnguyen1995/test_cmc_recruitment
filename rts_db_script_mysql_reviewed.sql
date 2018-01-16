@@ -21,7 +21,7 @@ create table user(
     full_name varchar(255),
     avatar_url varchar(255),
     department_id bigint,
-    isActive bit,
+    is_active bit,
     constraint fk_user_department foreign key(department_id) references department(id)
 );
 create table user_role(
@@ -111,7 +111,6 @@ CREATE TABLE cv (
     profile_img varchar(255),
     address varchar(255),
     education varchar(255),
-    skills varchar(255) NOT NULL,
     work_experience text,
     cv_url varchar(255),
     status_id bigint,

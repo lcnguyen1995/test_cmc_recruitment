@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -33,12 +31,11 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+    
     @Column(name = "role_name")
     private String roleName;
-    @JoinTable(name = "user_role", joinColumns = {
-        @JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "user_id", referencedColumnName = "id")})
-    @ManyToMany
+    
+    @ManyToMany(mappedBy = "roleCollection")
     @JsonIgnore
     private Set<User> userCollection;
 
@@ -65,13 +62,19 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public void setUserCollection(Set<User> userCollection) {
-        this.userCollection = userCollection;
+    public Set<User> getUserCollection() {
+      return userCollection;
     }
-    
+
+    public void setUserCollection(Set<User> userCollection) {
+      this.userCollection = userCollection;
+    }
+
     @Override
     public String toString() {
-        return "demo.Role[ id=" + id + " ]";
+      return "Role [id=" + id + ", roleName=" + roleName + "]";
     }
+    
+
     
 }

@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author User
@@ -37,6 +39,7 @@ public class Department implements Serializable {
     @Column(name = "description")
     private String description;
     @OneToMany(mappedBy = "departmentId")
+    @JsonIgnore
     private Collection<User> userCollection;
 
     public Department() {

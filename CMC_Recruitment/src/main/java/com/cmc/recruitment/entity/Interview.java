@@ -41,11 +41,13 @@ public class Interview implements Serializable {
     private String location;
     @Column(name = "note")
     private String note;
+    
+    @ManyToMany
     @JoinTable(name = "assignee_interview", joinColumns = {
         @JoinColumn(name = "interview_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "id")})
-    @ManyToMany
     private Set<User> userCollection;
+    
     @JoinColumn(name = "candidate_id", referencedColumnName = "id")
     @ManyToOne
     private Candidate candidateId;

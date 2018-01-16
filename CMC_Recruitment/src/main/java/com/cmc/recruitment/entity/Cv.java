@@ -56,8 +56,6 @@ public class Cv implements Serializable {
     private String address;
     @Column(name = "education")
     private String education;
-    @Column(name = "skills")
-    private String skills;
     @Column(name = "work_experience")
     private String workExperience;
     @Column(name = "cv_url")
@@ -83,7 +81,6 @@ public class Cv implements Serializable {
 
     public Cv(Long id, String skills) {
         this.id = id;
-        this.skills = skills;
     }
 
     public Long getId() {
@@ -165,15 +162,7 @@ public class Cv implements Serializable {
     public void setEducation(String education) {
         this.education = education;
     }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
-
+    
     public String getWorkExperience() {
         return workExperience;
     }
