@@ -6,9 +6,9 @@
 package com.cmc.recruitment.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,9 +19,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,20 +26,16 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "interview")
-
 public class Interview implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
     @Column(name = "title")
     private String title;
     @Column(name = "time")
-    @Temporal(TemporalType.DATE)
     private Date time;
     @Column(name = "location")
     private String location;
@@ -52,7 +45,7 @@ public class Interview implements Serializable {
         @JoinColumn(name = "interview_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<User> userCollection;
+    private Set<User> userCollection;
     @JoinColumn(name = "candidate_id", referencedColumnName = "id")
     @ManyToOne
     private Candidate candidateId;
@@ -111,13 +104,8 @@ public class Interview implements Serializable {
     public void setNote(String note) {
         this.note = note;
     }
-
-    @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(Collection<User> userCollection) {
+    
+    public void setUserCollection(Set<User> userCollection) {
         this.userCollection = userCollection;
     }
 
@@ -135,26 +123,6 @@ public class Interview implements Serializable {
 
     public void setStatusId(InterviewStatus statusId) {
         this.statusId = statusId;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Interview)) {
-            return false;
-        }
-        Interview other = (Interview) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

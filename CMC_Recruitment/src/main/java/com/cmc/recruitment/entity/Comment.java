@@ -7,7 +7,7 @@ package com.cmc.recruitment.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,26 +23,22 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "comment")
-
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
     @Column(name = "comment_detail")
     private String commentDetail;
     @Column(name = "create_date")
-    @Temporal(TemporalType.DATE)
     private Date createDate;
     @JoinColumn(name = "candidate_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Candidate candidateId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User userId;
 
     public Comment() {
@@ -97,26 +91,6 @@ public class Comment implements Serializable {
 
     public void setUserId(User userId) {
         this.userId = userId;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Comment)) {
-            return false;
-        }
-        Comment other = (Comment) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

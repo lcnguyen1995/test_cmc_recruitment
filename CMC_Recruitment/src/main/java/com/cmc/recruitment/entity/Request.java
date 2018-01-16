@@ -8,7 +8,9 @@ package com.cmc.recruitment.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,25 +33,19 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "request")
-
 public class Request implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
     @Column(name = "title")
     private String title;
     @Column(name = "deadline")
-    @Temporal(TemporalType.DATE)
     private Date deadline;
-    @Basic(optional = false)
     @Column(name = "number")
     private int number;
-    @Basic(optional = false)
     @Column(name = "description")
     private String description;
     @Column(name = "major")
@@ -61,13 +57,10 @@ public class Request implements Serializable {
     @Column(name = "benefit")
     private String benefit;
     @Column(name = "created_date")
-    @Temporal(TemporalType.DATE)
     private Date createdDate;
     @Column(name = "edited_date")
-    @Temporal(TemporalType.DATE)
     private Date editedDate;
     @Column(name = "published_date")
-    @Temporal(TemporalType.DATE)
     private Date publishedDate;
     @Column(name = "education")
     private String education;
@@ -82,9 +75,9 @@ public class Request implements Serializable {
         @JoinColumn(name = "request_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "skill_id", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<Skill> skillCollection;
+    private Set<Skill> skillCollection;
     @JoinColumn(name = "position_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Position positionId;
     @JoinColumn(name = "request_status_id", referencedColumnName = "id")
     @ManyToOne
@@ -99,7 +92,7 @@ public class Request implements Serializable {
     @ManyToOne
     private User editedBy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "requestId")
-    private Collection<Candidate> candidateCollection;
+    private List<Candidate> candidateCollection;
 
     public Request() {
     }
@@ -248,7 +241,7 @@ public class Request implements Serializable {
         return skillCollection;
     }
 
-    public void setSkillCollection(Collection<Skill> skillCollection) {
+    public void setSkillCollection(Set<Skill> skillCollection) {
         this.skillCollection = skillCollection;
     }
 
@@ -292,33 +285,8 @@ public class Request implements Serializable {
         this.editedBy = editedBy;
     }
 
-    @XmlTransient
-    public Collection<Candidate> getCandidateCollection() {
-        return candidateCollection;
-    }
-
-    public void setCandidateCollection(Collection<Candidate> candidateCollection) {
+    public void setCandidateCollection(List<Candidate> candidateCollection) {
         this.candidateCollection = candidateCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Request)) {
-            return false;
-        }
-        Request other = (Request) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

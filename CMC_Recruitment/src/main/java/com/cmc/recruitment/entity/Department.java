@@ -7,6 +7,7 @@ package com.cmc.recruitment.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "department")
-
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;

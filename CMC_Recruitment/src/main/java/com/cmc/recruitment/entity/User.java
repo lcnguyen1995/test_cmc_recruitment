@@ -6,8 +6,9 @@
 package com.cmc.recruitment.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,22 +27,17 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "user")
-
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
     @Column(name = "username")
     private String username;
-    @Basic(optional = false)
     @Column(name = "password")
     private String password;
-    @Basic(optional = false)
     @Column(name = "email")
     private String email;
     @Column(name = "full_name")
@@ -52,17 +47,17 @@ public class User implements Serializable {
     @Column(name = "isActive")
     private Boolean isActive;
     @ManyToMany(mappedBy = "userCollection")
-    private Collection<Interview> interviewCollection;
+    private Set<Interview> interviewCollection;
     @ManyToMany(mappedBy = "userCollection")
-    private Collection<Role> roleCollection;
+    private Set<Role> roleCollection;
     @OneToMany(mappedBy = "assigneeId")
-    private Collection<Request> requestCollection;
+    private List<Request> requestCollection;
     @OneToMany(mappedBy = "createdBy")
-    private Collection<Request> requestCollection1;
+    private List<Request> requestCollection1;
     @OneToMany(mappedBy = "editedBy")
-    private Collection<Request> requestCollection2;
+    private List<Request> requestCollection2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<Comment> commentCollection;
+    private List<Comment> commentCollection;
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne
     private Department departmentId;
@@ -137,86 +132,60 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    @XmlTransient
-    public Collection<Interview> getInterviewCollection() {
-        return interviewCollection;
+    public Set<Interview> getInterviewCollection() {
+      return interviewCollection;
     }
 
-    public void setInterviewCollection(Collection<Interview> interviewCollection) {
-        this.interviewCollection = interviewCollection;
+    public void setInterviewCollection(Set<Interview> interviewCollection) {
+      this.interviewCollection = interviewCollection;
     }
 
-    @XmlTransient
-    public Collection<Role> getRoleCollection() {
-        return roleCollection;
+    public Set<Role> getRoleCollection() {
+      return roleCollection;
     }
 
-    public void setRoleCollection(Collection<Role> roleCollection) {
-        this.roleCollection = roleCollection;
+    public void setRoleCollection(Set<Role> roleCollection) {
+      this.roleCollection = roleCollection;
     }
 
-    @XmlTransient
-    public Collection<Request> getRequestCollection() {
-        return requestCollection;
+    public List<Request> getRequestCollection() {
+      return requestCollection;
     }
 
-    public void setRequestCollection(Collection<Request> requestCollection) {
-        this.requestCollection = requestCollection;
+    public void setRequestCollection(List<Request> requestCollection) {
+      this.requestCollection = requestCollection;
     }
 
-    @XmlTransient
-    public Collection<Request> getRequestCollection1() {
-        return requestCollection1;
+    public List<Request> getRequestCollection1() {
+      return requestCollection1;
     }
 
-    public void setRequestCollection1(Collection<Request> requestCollection1) {
-        this.requestCollection1 = requestCollection1;
+    public void setRequestCollection1(List<Request> requestCollection1) {
+      this.requestCollection1 = requestCollection1;
     }
 
-    @XmlTransient
-    public Collection<Request> getRequestCollection2() {
-        return requestCollection2;
+    public List<Request> getRequestCollection2() {
+      return requestCollection2;
     }
 
-    public void setRequestCollection2(Collection<Request> requestCollection2) {
-        this.requestCollection2 = requestCollection2;
+    public void setRequestCollection2(List<Request> requestCollection2) {
+      this.requestCollection2 = requestCollection2;
     }
 
-    @XmlTransient
-    public Collection<Comment> getCommentCollection() {
-        return commentCollection;
+    public List<Comment> getCommentCollection() {
+      return commentCollection;
     }
 
-    public void setCommentCollection(Collection<Comment> commentCollection) {
-        this.commentCollection = commentCollection;
+    public void setCommentCollection(List<Comment> commentCollection) {
+      this.commentCollection = commentCollection;
     }
 
     public Department getDepartmentId() {
-        return departmentId;
+      return departmentId;
     }
 
     public void setDepartmentId(Department departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
-            return false;
-        }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+      this.departmentId = departmentId;
     }
 
     @Override
